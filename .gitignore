@@ -1,0 +1,40 @@
+# Credentials et config locale
+.env
+.claude/
+CLAUDE.md
+
+# Donnees personnelles / sensibles
+.kinvent_cache.json
+exports/
+*.xlsx
+ovh_final.sql
+
+# Base de donnees locale
+*.db
+*.db-journal
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+.pytest_cache/
+*.egg-info/
+dist/
+build/
+
+# Scripts ad-hoc / non essentiels
+export_excel.py
+link_athletes.py
+kinvent/insert_metrics_mysql.py
+kinvent/db.py
+kinvent/sync.py
+kinvent/extract_metrics.py
+sync_all.py
+check_nadir_hifi.py
+find_buggy_protocols.py
+deploy_auto_link.py
+setup_edf_u17.py
+ssh_*.py
+test_api.py

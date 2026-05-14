@@ -1,0 +1,1213 @@
+{
+	"info": {
+		"_postman_id": "49b14b4b-6a7a-4c7e-9ce2-adff597fd333",
+		"name": "KINVENT Public API",
+		"description": "This collection includes detailed instructions and examples to help you navigate the authentication process and utilize the API effectively.\n\n1. Make sure that you select \"KINVENT - Public API Environment\" environment configuration.\n    \n2. Every folder contains a description with notes about the entities and their usage.\n    \n\n> This particular collection is pointing to a staging test environment.  \nIt is highly recommended to familiarize first with the requests and structure before making requests to the production environment.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "19416660"
+	},
+	"item": [
+		{
+			"name": "Authorization",
+			"item": [
+				{
+					"name": "Fetch Account",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{test_account_password}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{test_account_username}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-Auth-Token",
+								"value": "{{X-Auth-Token-Value}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{urlBase}}/api/authorization/self",
+							"host": [
+								"{{urlBase}}"
+							],
+							"path": [
+								"api",
+								"authorization",
+								"self"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Check if the response status is 200\r",
+									"if (pm.response.code === 200) {\r",
+									"    \r",
+									"    let responseBody = pm.response.json();\r",
+									"    let tokenValue = responseBody.token;\r",
+									"\r",
+									"    // Set the environment variable\r",
+									"    pm.environment.set(\"X-Auth-Token-Value\", tokenValue);\r",
+									"\r",
+									"    const oneWeekAgo = new Date();\r",
+									"    oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);\r",
+									"    const oneWeekAgoMillis = oneWeekAgo.getTime();\r",
+									"\r",
+									"    pm.environment.set(\"updatedAfter\", oneWeekAgoMillis);\r",
+									"} else {\r",
+									"    console.log(\"Response status is not 200. Token not saved.\");\r",
+									"}"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{test_account_password}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{test_account_username}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{urlBase}}/api/authorization/login",
+							"host": [
+								"{{urlBase}}"
+							],
+							"path": [
+								"api",
+								"authorization",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Account",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{test_account_password}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{test_account_username}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "X-Auth-Token",
+								"value": "{{X-Auth-Token-Value}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"code\": \"d6caf731-eeb7-4cb3-a6eb-b925b4d4fbeb\",\r\n    \"email\": \"kinventstagingtest@gmail.com\",\r\n    \"emailConfirmedOn\": null,\r\n    \"password\": null,\r\n    \"firstName\": \"Pete\",\r\n    \"lastName\": \"Parker\",\r\n    \"gender\": \"MALE\",\r\n    \"dateOfBirth\": 0,\r\n    \"specialty\": \"ORTHOPEDICS\",\r\n    \"professionalRole\": \"CHIROPRACTOR\",\r\n    \"termsOfUseVersion\": \"1\",\r\n    \"deviceUnlockPattern\": \"76d1dabed06c7a234de1caab62e84969e34d770e\",\r\n    \"logo\": null,\r\n    \"termsOfUseConsentOn\": 1685699543000,\r\n    \"generalTermsOfUseVersion\": \"1\",\r\n    \"generalTermsOfUseConsentOn\": 1720687758000,\r\n    \"generalTermsOfUseDeclinedOn\": 0,\r\n    \"receiveMarketingMaterial\": false,\r\n    \"deleted\": false,\r\n    \"accountRole\": \"USER\",\r\n    \"organization\": null,\r\n    \"action\": null,\r\n    \"profiles\": [],\r\n    \"metaFields\": [\r\n        {\r\n            \"code\": \"d333def2-7f17-4361-96c3-485b209997d8\",\r\n            \"metaKey\": \"pronunciation\",\r\n            \"metaValue\": \"mr\",\r\n            \"deleted\": false,\r\n            \"createdOn\": 1685699544000,\r\n            \"updatedOn\": 1685699544000\r\n        },\r\n        {\r\n            \"code\": \"d9db20c0-6bc7-4b57-8d54-eee192b51fba\",\r\n            \"metaKey\": \"patients_number\",\r\n            \"metaValue\": \"20-30\",\r\n            \"deleted\": false,\r\n            \"createdOn\": 1685699544000,\r\n            \"updatedOn\": 1685699544000\r\n        },\r\n        {\r\n            \"code\": \"bcd3b01d-67f1-46e2-a66d-0b624f21b4fa\",\r\n            \"metaKey\": \"experience\",\r\n            \"metaValue\": \"3-5 years of experience\",\r\n            \"deleted\": false,\r\n            \"createdOn\": 1685699544000,\r\n            \"updatedOn\": 1685699544000\r\n        },\r\n        {\r\n            \"code\": \"f58451d6-6891-4e42-a822-f49111ac1ca2\",\r\n            \"metaKey\": \"include_dr_title\",\r\n            \"metaValue\": \"false\",\r\n            \"deleted\": false,\r\n            \"createdOn\": 1685699544000,\r\n            \"updatedOn\": 1685699544000\r\n        }\r\n    ],\r\n    \"khomeInvitationToken\": null,\r\n    \"country\": \"GR\",\r\n    \"telephone\": \"6989865555\",\r\n    \"telephoneCountryCode\": \"GR\",\r\n    \"zipCode\": \"56123\",\r\n    \"city\": \"Thessaloniki\",\r\n    \"address\": null,\r\n    \"appAgent\": null,\r\n    \"createdOn\": 1685699544000,\r\n    \"enabled\": true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{urlBase}}/api/authorization/self",
+							"host": [
+								"{{urlBase}}"
+							],
+							"path": [
+								"api",
+								"authorization",
+								"self"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "### Authentication Flow:\n\n1. **Login Request:** Begin by calling the Login request to authenticate yourself within the environment.\n    \n2. **Automatic Token Management:** Upon successful authentication, a Postman script will automatically execute to save the authentication token into an environment variable and also initializes the \"updatedAfter\" parameter.\n    \n3. **Token Usage:** This saved auth token will then be used in the headers of all subsequent API requests, ensuring seamless and authorized interactions with our API."
+		},
+		{
+			"name": "Participant",
+			"item": [
+				{
+					"name": "Fetch all participants",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const oneWeekAgo = new Date();\r",
+									"oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);\r",
+									"const oneWeekAgoMillis = oneWeekAgo.getTime();\r",
+									"\r",
+									"pm.environment.set(\"updatedAfter\", oneWeekAgoMillis);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-Auth-Token",
+								"value": "{{X-Auth-Token-Value}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{urlBase}}/api/participants/v1?updatedAfter={{updatedAfter}}&includeDeleted=true",
+							"host": [
+								"{{urlBase}}"
+							],
+							"path": [
+								"api",
+								"participants",
+								"v1"
+							],
+							"query": [
+								{
+									"key": "updatedAfter",
+									"value": "{{updatedAfter}}",
+									"description": "Include participants with updatedOn > {this_paratemer_value_in_millis}"
+								},
+								{
+									"key": "includeDeleted",
+									"value": "true",
+									"description": "Include participants that are marked as deleted"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Fetch participant by code",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-Auth-Token",
+								"value": "{{X-Auth-Token-Value}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{urlBase}}/api/participants/v1/{{test_participant_code}}",
+							"host": [
+								"{{urlBase}}"
+							],
+							"path": [
+								"api",
+								"participants",
+								"v1",
+								"{{test_participant_code}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Bulk Create",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "X-Auth-Token",
+								"value": "{{X-Auth-Token-Value}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[\r\n    {\r\n        \"firstName\": \"Nikos\",\r\n        \"lastName\": \"Mouts\",\r\n        \"code\": \"d448725b-5bfd-4230-8f58-e4f88c9ca426\",\r\n        \"userCode\": \"d6caf731-eeb7-4cb3-a6eb-b925b4d4fbeb\",\r\n        \"age\": 0,\r\n        \"dateOfBirth\": 1117706077000,\r\n        \"gender\": \"MALE\",\r\n        \"dateConsentToKeepData\": 1685699745000,\r\n        \"dateConsentToAnonymousAnalytics\": 1685699745000,\r\n        \"photo\": null,\r\n        \"email\": null,\r\n        \"deleted\": true,\r\n        \"khomeAcceptedOn\": 0,\r\n        \"height\": 180,\r\n        \"weight\": 70.0,\r\n        \"createdOn\": 1685699896000,\r\n        \"updatedOn\": 1698867938000,\r\n        \"appAgent\": \"PHYSIO\",\r\n        \"metaFields\": [],\r\n        \"tags\": [],\r\n        \"targets\": []\r\n    }\r\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{urlBase}}/api/participants/v1",
+							"host": [
+								"{{urlBase}}"
+							],
+							"path": [
+								"api",
+								"participants",
+								"v1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Bulk Update",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "X-Auth-Token",
+								"value": "{{X-Auth-Token-Value}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[\r\n    {\r\n        \"firstName\": \"Nikos\",\r\n        \"lastName\": \"Mouts\",\r\n        \"code\": \"d448725b-5bfd-4230-8f58-e4f88c9ca426\",\r\n        \"userCode\": \"d6caf731-eeb7-4cb3-a6eb-b925b4d4fbeb\",\r\n        \"age\": 0,\r\n        \"dateOfBirth\": 1117706077000,\r\n        \"gender\": \"MALE\",\r\n        \"dateConsentToKeepData\": 1685699745000,\r\n        \"dateConsentToAnonymousAnalytics\": 1685699745000,\r\n        \"photo\": null,\r\n        \"email\": null,\r\n        \"deleted\": true,\r\n        \"khomeAcceptedOn\": 0,\r\n        \"height\": 180,\r\n        \"weight\": 70.0,\r\n        \"createdOn\": 1685699896000,\r\n        \"updatedOn\": 1698867938000,\r\n        \"appAgent\": \"PHYSIO\",\r\n        \"metaFields\": [],\r\n        \"tags\": [],\r\n        \"targets\": []\r\n    }\r\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{urlBase}}/api/participants/v1",
+							"host": [
+								"{{urlBase}}"
+							],
+							"path": [
+								"api",
+								"participants",
+								"v1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update participant by code",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "X-Auth-Token",
+								"value": "{{X-Auth-Token-Value}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"firstName\": \"Nikos\",\r\n    \"lastName\": \"Mouts\",\r\n    \"code\": \"e448725b-5bfd-4230-8f58-e4f88c9ca426\",\r\n    \"userCode\": \"d6caf731-eeb7-4cb3-a6eb-b925b4d4fbeb\",\r\n    \"age\": 0,\r\n    \"dateOfBirth\": 1117706077000,\r\n    \"gender\": \"MALE\",\r\n    \"dateConsentToKeepData\": 1685699745000,\r\n    \"dateConsentToAnonymousAnalytics\": 1685699745000,\r\n    \"photo\": null,\r\n    \"email\": null,\r\n    \"deleted\": false,\r\n    \"khomeAcceptedOn\": 0,\r\n    \"height\": 180,\r\n    \"weight\": 70.0,\r\n    \"createdOn\": 1685699896000,\r\n    \"updatedOn\": 1698867938000,\r\n    \"appAgent\": \"PHYSIO\",\r\n    \"metaFields\": [],\r\n    \"tags\": [],\r\n    \"targets\": []\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{urlBase}}/api/participants/v1/{{test_participant_code}}",
+							"host": [
+								"{{urlBase}}"
+							],
+							"path": [
+								"api",
+								"participants",
+								"v1",
+								"{{test_participant_code}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete participant by code (Soft)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "X-Auth-Token",
+								"value": "{{X-Auth-Token-Value}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{urlBase}}/api/participants/v1/{{test_participant_code}}",
+							"host": [
+								"{{urlBase}}"
+							],
+							"path": [
+								"api",
+								"participants",
+								"v1",
+								"{{test_participant_code}}"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "### Important Note:\n\n- **Delete Endpoint Behavior:** Please be aware that the delete endpoint does not permanently remove resources. Instead, it updates the resource's `deleted` field to `true`. This ensures that resources can be flagged as deleted while still retaining historical data."
+		},
+		{
+			"name": "Protocols",
+			"item": [
+				{
+					"name": "Find protocols",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"const oneWeekAgo = new Date();",
+									"oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);",
+									"const oneWeekAgoMillis = oneWeekAgo.getTime();",
+									"",
+									"pm.environment.set(\"updatedAfter\", oneWeekAgoMillis);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-Auth-Token",
+								"value": "{{X-Auth-Token-Value}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{urlBase}}/api/protocols/v1?updatedAfter={{updatedAfter}}&includeDeleted=true&X-Auth-Token={{X-Auth-Token-Value}}",
+							"host": [
+								"{{urlBase}}"
+							],
+							"path": [
+								"api",
+								"protocols",
+								"v1"
+							],
+							"query": [
+								{
+									"key": "updatedAfter",
+									"value": "{{updatedAfter}}"
+								},
+								{
+									"key": "includeDeleted",
+									"value": "true"
+								},
+								{
+									"key": "X-Auth-Token",
+									"value": "{{X-Auth-Token-Value}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Find protocol by code",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-Auth-Token",
+								"value": "{{X-Auth-Token-Value}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{urlBase}}/api/protocols/v1/{{test_protocol_code}}",
+							"host": [
+								"{{urlBase}}"
+							],
+							"path": [
+								"api",
+								"protocols",
+								"v1",
+								"{{test_protocol_code}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Find protocols by participantCode",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-Auth-Token",
+								"value": "{{X-Auth-Token-Value}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{urlBase}}/api/protocols/v1/findByParticipantCode?participantCode={{test_participant_code}}",
+							"host": [
+								"{{urlBase}}"
+							],
+							"path": [
+								"api",
+								"protocols",
+								"v1",
+								"findByParticipantCode"
+							],
+							"query": [
+								{
+									"key": "participantCode",
+									"value": "{{test_participant_code}}",
+									"description": "The unique UUID code of the participant entity"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Find protocols by codes",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "X-Auth-Token",
+								"value": "{{X-Auth-Token-Value}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[\r\n  \"{{test_protocol_code}}\"\r\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{urlBase}}/api/protocols/v1/findByCodes",
+							"host": [
+								"{{urlBase}}"
+							],
+							"path": [
+								"api",
+								"protocols",
+								"v1",
+								"findByCodes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Analyze protocols",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "X-Auth-Token",
+								"value": "{{X-Auth-Token-Value}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[\r\n  \"{{test_protocol_code}}\"\r\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{urlBase}}/api/protocols/v2/analyze",
+							"host": [
+								"{{urlBase}}"
+							],
+							"path": [
+								"api",
+								"protocols",
+								"v2",
+								"analyze"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Bulk Update",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "X-Auth-Token",
+								"value": "{{X-Auth-Token-Value}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[\r\n    {\r\n        \"code\": \"e9b5df81-08fc-461b-9dd0-b9d6a06896b0\",\r\n        \"userCode\": \"d6caf731-eeb7-4cb3-a6eb-b925b4d4fbeb\",\r\n        \"participantCode\": \"4fb6dabe-e964-45f6-8f31-8f4eaa9fefdd\",\r\n        \"config\": null,\r\n        \"appAgent\": \"PHYSIO\",\r\n        \"scheduledEvent\": null,\r\n        \"activities\": [\r\n            {\r\n                \"code\": \"6f5b0ef0-b8e5-4149-95f1-32271cbd310b\",\r\n                \"participantCode\": \"4fb6dabe-e964-45f6-8f31-8f4eaa9fefdd\",\r\n                \"startTime\": 1685705240757,\r\n                \"config\": {\r\n                    \"code\": \"ff40cf58-1ae3-4328-bb41-0c0ae7d19c4d\",\r\n                    \"userCode\": null,\r\n                    \"name\": null,\r\n                    \"title\": \"a_title_for_testing_purposes\",\r\n                    \"tags\": \"exercise_template_builtin_grip_text_group,UPPER_LIMB,WRIST_HAND,STRENGTH\",\r\n                    \"repetition\": 3,\r\n                    \"duration\": 5,\r\n                    \"rest\": 3,\r\n                    \"preparationTime\": 3,\r\n                    \"difficulty\": \"UNKNOWN\",\r\n                    \"exerciseType\": \"METER_ENDURANCE\",\r\n                    \"activityType\": \"EVALUATION\",\r\n                    \"orientationType\": \"UNKNOWN\",\r\n                    \"activityConfigSets\": [\r\n                        {\r\n                            \"code\": \"052a596c-0ba8-416b-88f7-14fc378a5e97\",\r\n                            \"ordinal\": 0,\r\n                            \"bodySide\": \"LEFT\",\r\n                            \"bodyPart\": \"ARM\",\r\n                            \"deviceType\": \"UNKNOWN\",\r\n                            \"balancePattern\": \"UNKNOWN\",\r\n                            \"metaFields\": [\r\n                                {\r\n                                    \"code\": \"eac41d67-f9db-40c0-9606-1ddf3fd6a216\",\r\n                                    \"metaKey\": \"target\",\r\n                                    \"metaValue\": \"18.083333333333332\",\r\n                                    \"deleted\": false\r\n                                }\r\n                            ],\r\n                            \"deleted\": false\r\n                        },\r\n                        {\r\n                            \"code\": \"46181b9d-7952-44c9-b411-3bbf57fe8e6d\",\r\n                            \"ordinal\": 1,\r\n                            \"bodySide\": \"RIGHT\",\r\n                            \"bodyPart\": \"ARM\",\r\n                            \"deviceType\": \"UNKNOWN\",\r\n                            \"balancePattern\": \"UNKNOWN\",\r\n                            \"metaFields\": [\r\n                                {\r\n                                    \"code\": \"0ba173ee-ad1c-4c7c-83f6-b404a1383963\",\r\n                                    \"metaKey\": \"target\",\r\n                                    \"metaValue\": \"18.083333333333332\",\r\n                                    \"deleted\": false\r\n                                }\r\n                            ],\r\n                            \"deleted\": false\r\n                        }\r\n                    ],\r\n                    \"activityConfigInstructions\": [\r\n                        {\r\n                            \"code\": \"e80600a2-6cc1-45d9-8c82-e748eb5851b5\",\r\n                            \"ordinal\": 1,\r\n                            \"title\": \"exercise_template_builtin_grip_text\",\r\n                            \"description\": null,\r\n                            \"image\": \"device_grip_real\",\r\n                            \"deleted\": false\r\n                        }\r\n                    ],\r\n                    \"activityConfigDevices\": [\r\n                        {\r\n                            \"code\": \"e7915559-73c9-4336-9c5c-72f1c91309e5\",\r\n                            \"deviceType\": \"GRIP\",\r\n                            \"deleted\": false\r\n                        }\r\n                    ],\r\n                    \"metaFields\": [],\r\n                    \"antagonistCode\": null,\r\n                    \"baseConfigCode\": \"68545ae8-875b-11e9-bc42-526af7764f64\",\r\n                    \"deleted\": false,\r\n                    \"buildIn\": true,\r\n                    \"configurable\": true\r\n                },\r\n                \"repetitions\": [\r\n                    {\r\n                        \"code\": \"908c58e2-eb6d-43ed-a535-53e388da8782\",\r\n                        \"ordinal\": 1,\r\n                        \"maxValue\": 37.48641428571428,\r\n                        \"averageValue\": 31.002706722689066,\r\n                        \"maxLeftRatio\": 0.0,\r\n                        \"overTargetDurationMilis\": 4787,\r\n                        \"bodyPartSide\": \"LEFT\",\r\n                        \"startTime\": 1685705243960,\r\n                        \"measurements\": [\r\n                            {\r\n                                \"code\": \"46d7f4be-61cf-4038-bda1-9f535a2e0603\",\r\n                                \"deviceType\": \"KFORCE_GRIP\",\r\n                                \"bodyPartSide\": \"LEFT\",\r\n                                \"bodyPart\": \"ARM\",\r\n                                \"deviceFirmware\": \"2.30\",\r\n                                \"protocolType\": \"BYTES_17\",\r\n                                \"serialCode\": \"99999000\",\r\n                                \"baseline\": \"ForceSample:4.5004, 0.3949, 0.3152, 0.3177, 0\",\r\n                                \"appVersion\": \"1.13.0\",\r\n                                \"serializedData\": \"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\",\r\n                                \"serializedListsLengths\": [\r\n                                    3411,\r\n                                    1532,\r\n                                    0,\r\n                                    0,\r\n                                    0\r\n                                ],\r\n                                \"deleted\": false\r\n                            },\r\n                            {\r\n                                \"code\": \"31544fbe-6646-47b0-bf9d-e243d394063e\",\r\n                                \"deviceType\": \"KFORCE_GRIP\",\r\n                                \"bodyPartSide\": \"LEFT\",\r\n                                \"bodyPart\": \"ARM\",\r\n                                \"deviceFirmware\": \"2.30\",\r\n                                \"protocolType\": \"BYTES_17\",\r\n                                \"serialCode\": \"99999000\",\r\n                                \"baseline\": null,\r\n                                \"appVersion\": \"1.13.0\",\r\n                                \"serializedData\": \"eNrtlT2olUcQhi8IImJhYWFlEbA92dmfmdnCPZBeVDCQxiySQoVACEHSiQYVomASRBFuk1SJFgFFUFKGCKkCNtokVmmSdClS5AecdyP3zHoLW4uzxTkf3zezO887u++GTmmRWOrWSNojL5gpbI2iPdVF5byKir1YXqKtF6qdLS2VVYx0DYtAafWmV0sKspo5dgq8ENLVK+kULa2yVWbRqi6dsi1R4+qNdmILdovW0kmAlFdTpk5qq7hqrbYYLDGWrSDqEVLU6Lh7hBTVTd8jlNDqJ4+QovA0ObTg4CeHFtG0hQQxuBkTFMiuNu4WsCAXY0GmRabUkykgnrcnCKArjpB7ggDie9oTBMiugT2DP9s/YWb2XwxaYs8Z3Yv+A0CVHFUGp2avfgZoIZ8G5Fx6AWjxNRRwxmR7CTV4qgJO9VunDE7pBXDVF1EGm+2/8PLKPNiqi2WwUewMuOrbwAMu2y42JPF68CDyO4UHkXYxIk3JfREQJekCouQ3gIDItoYweutXFiPKbP/g4GinBqr4fa/gSKnr6IzXSQdHcgdCwVHFHTHloburRQeR+CwQsdeuDjbuFUTZk1Rjs1667Gps9gsy8XVXkNlWqoPMK4j+2bTRn+QwKD0dBQPWkKZXGfrJZCEDuU5RYGaZpgc0Y+mKdSyIBmL1U1HcVhZsqFgazEcp2wM4FcEDb8KC0WiZ8uMgNTuDv9gxIJiKEk8xgJpcgeAqOSIcKFhuWIg7bMgDCpu/wURUrLhhHSIwTys7T9EwD014MIJI7AuHZ5Q4OTM8QycDwD4w9OAnHf6h2SfCQEwEewBWLtM3YGWdZuChhz3oUMGXBe/IdrcQzKOG6TKAe0TMCfsoOtUO/1CZ+lD4hTJwEFPGHgCY1efBQ15SBiZSwlQxjw7GKQqoFQ9lmx6wFJ0OF8FTqFh3YSWmh11aAMxTHswkJm9FJKOrEyqMxZTxxcjoL/mSYTJ24u0B0IorcfRSfB58Ziijo4OWBn+Jk+MQDMZcFneqBUWrAHZCOt3K8JNcbaY6+uYNiuAoUWy5YSRiIsA/akmeCmYS87RwlW3sMJZKisscdbqNufGajHb44uF24VNpt/492r6+/H27/d274//Lxw/ajW/eaee+2GjvPd29sR6v1rK/vdk+/m1v++T29Xb+9M/to1NfQbt27I9L7cidn9qJfb+20+2t9sHGmXb2hbaIu/jLm+3Sf1fblQ+ftc93Xmubh3aNHtz97FH74dqV9qws2+/n/m5/Hj/Z/vrxfvvn0K7ljpSWe+7dXO5//43lwSd1Kd/uWx59/GB59sDDdSfWYz3WYz3WYz3+H88BZvs0Mw==\",\r\n                                \"serializedListsLengths\": [\r\n                                    2265,\r\n                                    604,\r\n                                    604,\r\n                                    604,\r\n                                    604\r\n                                ],\r\n                                \"deleted\": false\r\n                            }\r\n                        ],\r\n                        \"metaFields\": [\r\n                            {\r\n                                \"code\": \"b2e10b3b-1093-4ae5-a1c1-12d29ceca894\",\r\n                                \"metaKey\": \"RFD_MEASUREMENTS\",\r\n                                \"metaValue\": \"31544fbe-6646-47b0-bf9d-e243d394063e\",\r\n                                \"deleted\": false\r\n                            }\r\n                        ],\r\n                        \"deleted\": false\r\n                    },\r\n                    {\r\n                        \"code\": \"c843c961-5579-459b-b6a2-b1564d5cb117\",\r\n                        \"ordinal\": 2,\r\n                        \"maxValue\": 30.681642857142858,\r\n                        \"averageValue\": 26.790665448504992,\r\n                        \"maxLeftRatio\": 0.0,\r\n                        \"overTargetDurationMilis\": 4680,\r\n                        \"bodyPartSide\": \"LEFT\",\r\n                        \"startTime\": 1685705252821,\r\n                        \"measurements\": [\r\n                            {\r\n                                \"code\": \"c7692c38-929c-4c73-bf6e-161fa6124e21\",\r\n                                \"deviceType\": \"KFORCE_GRIP\",\r\n                                \"bodyPartSide\": \"LEFT\",\r\n                                \"bodyPart\": \"ARM\",\r\n                                \"deviceFirmware\": \"2.30\",\r\n                                \"protocolType\": \"BYTES_17\",\r\n                                \"serialCode\": \"99999000\",\r\n                                \"baseline\": \"ForceSample:4.5004, 0.3949, 0.3152, 0.3177, 0\",\r\n                                \"appVersion\": \"1.13.0\",\r\n                                \"serializedData\": \"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\",\r\n                                \"serializedListsLengths\": [\r\n                                    3786,\r\n                                    1532,\r\n                                    0,\r\n                                    0,\r\n                                    0\r\n                                ],\r\n                                \"deleted\": false\r\n                            },\r\n                            {\r\n                                \"code\": \"e1a4a0c7-669c-4306-ad2f-a0964f986866\",\r\n                                \"deviceType\": \"KFORCE_GRIP\",\r\n                                \"bodyPartSide\": \"LEFT\",\r\n                                \"bodyPart\": \"ARM\",\r\n                                \"deviceFirmware\": \"2.30\",\r\n                                \"protocolType\": \"BYTES_17\",\r\n                                \"serialCode\": \"99999000\",\r\n                                \"baseline\": null,\r\n                                \"appVersion\": \"1.13.0\",\r\n                                \"serializedData\": \"eNrtlruLXVUUxiMEFQTxhVqqldF43Ws/11Zyzr1BhIBpRAcRZFsoiAQiWEwngib5B9QEwcbGwkchgrVWCYJYCGlMQCGgThF8oKAEXd+G3POdmTZd7m5mZs9aa+/1W9/5znFNwsJXX6+unFPzeZGLuKvLl9xCXdQc1lE1tmR5KU950rKlhTSl+VYsy5d1jGqrOC1PMdrEWZqbVshNBKeV9VZKdktLpDArLjEvUo5TYpNkecGvd0qTEhYh+lklzQtqzlXr17mF5a+3cvNGJbjpPIvpUKbTavNhzy29QQmEALU7FV1vaWgeWOhSVqriuIluaqFTWV9JWuhMppBgMWBSpqHE0IIxMSTTVFroTCKX7kzirFJnIlNQaBFMDOhUKYKJxhY7iekqpUWQKHR9CwaJSHu2lXffLSq41xbRPh1fW0L7SqJoCf3rxB8CRPulpd7z9B/fEnqOytnWc/Skg5Z6y9OoTL6940p1cu+4kC4yep9CrI51tHBJaZgZrWdPhdF4SiTLjMbpOtoyEJDAaytAUAMNrgABaSC2EqAbxzGAkQrHAEYWjgGMWKj1Ahj0dGtTwIiehqwGI4pQlhqM4gLHAIZ6Aq+AUVJTMCiVs8GAbmExYDBhshFXhyHRw9Oqx5CEY8DAM90KBso2UMFAM9cBg8LkKhjw09RwysLlCaY5jAOFmEiq4oAhKOlanHEQl4in/QUFCruVy+gO5wCFMlpxYKFkpmaKEEQpfLSARmKbEhhlIKOEmxqP4pWqS4b+ZBbUReE5yICoU+4eRmn9EkfxXRaZQAqschdJD2GQZ6AWgNDd7UR4ZYnK2DzQJCGNCcwyGg9YZPH83EsAjzqDDJMMNZFgpJukvYskAEPO/L4IXReFO+zmWFiWAnMUcje8jMCBLmpHwyh3AYwQhvesFThlJKNFFDgoP1jSrVJnmOGaES80mKU95faL3wMLJhmDm70kuxzwS8Y0ZyqATybxs60ug8QV4JSi9HISOGUsmfNglYUs3C4Dr5SZOUnuKhAuZc2rKHcKuzShzfJqp0Z+KTDMop6jit9DDZZpyJkRPLPQtWzmpSvDxgqvTPgkgUXaSBrcaOFnniSwxjQzJYE3qsw+TmCOMrMlgTvGmS8JjLKQUeKDBe3Tp5ZdS/vsZ3DhlSozs4JZ2jA5EW4ZdWZWsMtS2eqlon2daRKGmRJ/oggcU+mjMO+7jtfwzMFDw9axP4fnPv3kmtV869zl4fybcbz9y3vGh1/9eXz8zNlx+OPoePjiDeMTp66MT+rJ/nP1yPa4/ODIeOjI0+Njb/wz6revje6/0+OBh9x4/86J8d5jD4y33Pz+8NfZL4bvvjkwfPzv3cM7p64Mb194dNj+5bbhleHw8Pz3B685E9T96OTX402f3TUe3fbj6Rv/Hn88/8PywUsvLo//tlp+uLV/ee6O48ufvnp2eXnnxPLXl99dXrp1a/n7Cy+t9r++s7rzqTOr+z5/b99mbdZmbdZmbdZ1vP4HMoyBFA==\",\r\n                                \"serializedListsLengths\": [\r\n                                    2637,\r\n                                    600,\r\n                                    600,\r\n                                    600,\r\n                                    600\r\n                                ],\r\n                                \"deleted\": false\r\n                            }\r\n                        ],\r\n                        \"metaFields\": [\r\n                            {\r\n                                \"code\": \"55bd328b-4ad0-4a3e-a08d-db63ec6fa40b\",\r\n                                \"metaKey\": \"RFD_MEASUREMENTS\",\r\n                                \"metaValue\": \"e1a4a0c7-669c-4306-ad2f-a0964f986866\",\r\n                                \"deleted\": false\r\n                            }\r\n                        ],\r\n                        \"deleted\": false\r\n                    },\r\n                    {\r\n                        \"code\": \"0c4789c2-0fb4-4408-9309-8fd05e9b13c2\",\r\n                        \"ordinal\": 3,\r\n                        \"maxValue\": 26.1041,\r\n                        \"averageValue\": 20.747958784893257,\r\n                        \"maxLeftRatio\": 0.0,\r\n                        \"overTargetDurationMilis\": 4000,\r\n                        \"bodyPartSide\": \"LEFT\",\r\n                        \"startTime\": 1685705262020,\r\n                        \"measurements\": [\r\n                            {\r\n                                \"code\": \"3f4c9a36-9fc9-4ed2-99f2-0fbb54ffe90d\",\r\n                                \"deviceType\": \"KFORCE_GRIP\",\r\n                                \"bodyPartSide\": \"LEFT\",\r\n                                \"bodyPart\": \"ARM\",\r\n                                \"deviceFirmware\": \"2.30\",\r\n                                \"protocolType\": \"BYTES_17\",\r\n                                \"serialCode\": \"99999000\",\r\n                                \"baseline\": \"ForceSample:4.5004, 0.3949, 0.3152, 0.3177, 0\",\r\n                                \"appVersion\": \"1.13.0\",\r\n                                \"serializedData\": \"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\",\r\n                                \"serializedListsLengths\": [\r\n                                    3788,\r\n                                    1532,\r\n                                    0,\r\n                                    0,\r\n                                    0\r\n                                ],\r\n                                \"deleted\": false\r\n                            },\r\n                            {\r\n                                \"code\": \"e2169ecc-8849-464d-b0ce-d91c89263792\",\r\n                                \"deviceType\": \"KFORCE_GRIP\",\r\n                                \"bodyPartSide\": \"LEFT\",\r\n                                \"bodyPart\": \"ARM\",\r\n                                \"deviceFirmware\": \"2.30\",\r\n                                \"protocolType\": \"BYTES_17\",\r\n                                \"serialCode\": \"99999000\",\r\n                                \"baseline\": null,\r\n                                \"appVersion\": \"1.13.0\",\r\n                                \"serializedData\": \"eNrtlrHLXUUQxaNpFAmEIDaWKSzUy87u7O5swPveS5daBBvZWmwEi5QpAxaKCBbaCBYiYhERQoSIhTYiQsBGFCRYaEhrIyI4Z9E7sy//gb5tPphvzuzOb2fPfaFTWmJL4Z9FLNxjWXIrWygV6aktraS2Le5ZdUXCtlIvZSmJ/83QOlVFSSzQelMRxy2Sa6dQlkp1K5NzpxiWEGkLFdZDpiVJ3bbvxLpZoy1AnbLu1rJFNKmqqlhvsZOorFSLSNcai5M1Sj0qkxTFACiSiObIhLFHMGlbe016VCYpRItoCFCCla+1R2CpG0tBdXCp1aFLiqVYw5J6ApVcDFRPgJLbFlGVUqmxbKqmSUVlKWwHQBawRPaVFEsNceuONAlYGhtxBpRqzZXOYFJsTqgzkNhdEmkSmCS7ucqdyxHLzoIbt1liTVIkiaIDkDEp0SJ6yKxMtM4WqjqVKmvWW+wZkyLGhHoGksJeNQZF3L1lEInZ5WifS7DCofUCIin6nAiO5HNYVcTu3RQAqeQj4FFtRnIvY0SaY12Ag21wS6/AkcVHMCHFuOZelYY+N7uQXseERK9SGkR2ZulVaXCwAdUcPBt/sV1Ao+YtUruARqlOJaCRiqssfMxQ8jFDKWAYfGU5ZiigIdYF9wYaYlRjb6DhXExzQMObWG+gkavPAY3JxBpoxOpVmI2kZqKSxZELRUMEdtHpKeCZNPyPj5lRGMMgUwX0n/IUAoDUJuGYh+TYEpxUqDiPhJEenQ9GyiLeEmGlegSvAwRu5n8aAoWcphAwcHbIdT9sOBkuvJTN3yGEl1axe9B24kAjUxbQCE21gIa946qBY6LiJGzYsTnnoDTQNL8j7JScLeATo7pmZqIbDj+dTwo/pRLdZ4/SYMO+lKKRmHwSA02szqyJ6YGD8kBTJyHQNJpCGRvK9DXEIMepuuAuvKcRPJWdg6oQpirT+yOYajQTw5dVyeSQfQRgzKFGpQEmu7dNeYCpU3GQScV5HcFYbWZQHcbKrbgHT3BWMacfugGGvQ5cCk1JAFN4KgUwKTkLpDLAeAemOsBYSLHXAYadv1IdZLwJExxWKv43gMiUrkByQhIwOCPUw0t44FiwVFXJ6F1PDvsk+3SAp4yW81RotKzXLaPR7ByZZDSqVwO/bMTeUmCY0f0S03Q4Zva/xDSE9kT8qx+e6X6LaQR9mvHjVcI0pRg8PnNa/7m1Xr13fn3/zs31y3NPrj899MH623p5/fXph9e77zy/fv/Mc+s3Fy+tt3+4tt568fz62S+314//fGK98ebX6xd//Lj+/MJ76+/X/9qdu/zV7uJjd3eHZ6/urt28t/v0o7f3Z954fX/llc/3b314fX/rpW/3d/Tv/UfePZx9+ZPDhccvHJ569Ozh0mv3D1e+e/V0C6d1Wqd1Wqf1f15/A0tqc2Q=\",\r\n                                \"serializedListsLengths\": [\r\n                                    2682,\r\n                                    600,\r\n                                    600,\r\n                                    600,\r\n                                    600\r\n                                ],\r\n                                \"deleted\": false\r\n                            }\r\n                        ],\r\n                        \"metaFields\": [\r\n                            {\r\n                                \"code\": \"be5efb9a-81d4-4dc4-bee8-d1888794a89f\",\r\n                                \"metaKey\": \"RFD_MEASUREMENTS\",\r\n                                \"metaValue\": \"e2169ecc-8849-464d-b0ce-d91c89263792\",\r\n                                \"deleted\": false\r\n                            }\r\n                        ],\r\n                        \"deleted\": false\r\n                    },\r\n                    {\r\n                        \"code\": \"7d761d60-a684-44e2-ab13-da487a73dcd9\",\r\n                        \"ordinal\": 1,\r\n                        \"maxValue\": 39.06618571428572,\r\n                        \"averageValue\": 33.517362126245864,\r\n                        \"maxLeftRatio\": 0.0,\r\n                        \"overTargetDurationMilis\": 4720,\r\n                        \"bodyPartSide\": \"RIGHT\",\r\n                        \"startTime\": 1685705271439,\r\n                        \"measurements\": [\r\n                            {\r\n                                \"code\": \"3a9a6b6e-f354-4da8-8572-6f5a75685936\",\r\n                                \"deviceType\": \"KFORCE_GRIP\",\r\n                                \"bodyPartSide\": \"RIGHT\",\r\n                                \"bodyPart\": \"ARM\",\r\n                                \"deviceFirmware\": \"2.30\",\r\n                                \"protocolType\": \"BYTES_17\",\r\n                                \"serialCode\": \"99999000\",\r\n                                \"baseline\": \"ForceSample:4.5004, 0.3949, 0.3152, 0.3177, 0\",\r\n                                \"appVersion\": \"1.13.0\",\r\n                                \"serializedData\": \"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\",\r\n                                \"serializedListsLengths\": [\r\n                                    3822,\r\n                                    1548,\r\n                                    0,\r\n                                    0,\r\n                                    0\r\n                                ],\r\n                                \"deleted\": false\r\n                            },\r\n                            {\r\n                                \"code\": \"6191819b-09ca-4ac1-b1b4-143bd5ef1975\",\r\n                                \"deviceType\": \"KFORCE_GRIP\",\r\n                                \"bodyPartSide\": \"RIGHT\",\r\n                                \"bodyPart\": \"ARM\",\r\n                                \"deviceFirmware\": \"2.30\",\r\n                                \"protocolType\": \"BYTES_17\",\r\n                                \"serialCode\": \"99999000\",\r\n                                \"baseline\": null,\r\n                                \"appVersion\": \"1.13.0\",\r\n                                \"serializedData\": \"eNrtlb+rXUUQxwMW/gAh5KVVtHpicd3Znd2dBT3n3UqEQIgpEnzgogEREf8DQYQniI0iGEGElD5RIZUkFpF0aSIWksJGtBGDKIKkCnG+Kzk7ey1sBe9Wl7k7s7uf3fkcVymsgmO3DMnVp1WWskRSruxWTvzdgKfINWqexCXkuCZNi6GnURVN49TTagkrJraVyWkW5SUUYyWvaeRsaQq6WpaeWInTKvUtOa2UsJqUuwOhrGnsh+Ki67llUqFQ9X9dLywhX32Dkk1xDyZlqUReqm9QeKikUDj5JZRZWYJK6onVyz/26cHFp55XA7D0jROlGoBFsi0egEXIFA+M5Za7Iwk1gEskW7xhiUNxYPHLzXi9cUDpW5LKgCJsS3Oj0kP6UAClSJ9UuTFZALgQK4NJ6g/MayWFQr7P0g2ASX9NLtQIJqG/Hn2DQFLIzgkgGZdtxxpBpF9JSTWmzT1GACnOzlEeqQRTJwFI8uasCUAim6ykPMT0EtWkPPTxLgGdozyifd7aN5plWlCz8ERKtlmgkaKZk90GxKrvRdfq7aaRRqPYLNDo+0GW0tDdLPeca2402M7B6zDPUbSzQSOaGxTCffXKpQpoxM6Qq4AGZ1sHNIbeE9Doe6ZYpb0NsnVAoxuKuBbQKMFkFdBIZM5eQCOyndO6Jds6oOH1nwxTiZ0LBpJMPdTWjuydXDQECknMCckBw+guBw6ZOmBy4GCkAC/iLfkhDSC6T1uobPIjGFVM52oEKLqrVVQEoY4ECUbNQkMp0OjN1GoBTMJ05SHBngEeJR+MMggiZZ9tAZi0uN5HCCkO75ItBWkUGUqBR86m+wkmpa4/h08HePCyoGh1qFTYSoKgUuoC/PsDo4k+mNuFSsWcvqK3dD22c0BDxAiYmkm7k3QSVEpRjICJaeNDoSFwCdn4hSBTP6iLYFN13JCYAJSGRAHQOIQARrxpc4JPJVvnUmxNU2wijLpBFErV5zTUAhrmoVbeJAqpjkQhVf2QmDmQKpdsz9ysWqw1CFr1iY0SqHk1W29QE2umYRbIGNWifHsy9iNGcGsh3Q2U6p1VBsGp+jW1J4VURax4qVk16wkh0xjFnBAy3aAn7YWwsSlBpzF4u3f4tHAPYRY4mP5ESDkkF4bE9kKS7Ww41afBG5DqBkBYVR2pP8AhDLqATWPED0b1QRKwqG+TcPoySAwelWIkdmQ7/hNjOvnp9encjQemg9vvTIeXn5++O/HhdOfi/nz042fmR28ezO7O+Xlv53A+ufvVfOatq/P+Kz/Pp/7YmZ/+8c15OvfIzM89ND924d354feOzDu3vpnv/eL4dPv1K9OvPzw4fXvzYLp09mire/77P9sar165OJ39/LN/3dcLH5yePnrqvumna7/Nu2/w/Pb+mfn3/a/3nj12Y++TWy/t/XL/PevjL365fvy1J9ZPXthdnzp8f/0y7W5vdDu2Yzu2Yzv+z+MvWbqAbQ==\",\r\n                                \"serializedListsLengths\": [\r\n                                    2691,\r\n                                    600,\r\n                                    600,\r\n                                    600,\r\n                                    600\r\n                                ],\r\n                                \"deleted\": false\r\n                            }\r\n                        ],\r\n                        \"metaFields\": [\r\n                            {\r\n                                \"code\": \"f7bede02-af6b-417a-9607-a5a109589070\",\r\n                                \"metaKey\": \"RFD_MEASUREMENTS\",\r\n                                \"metaValue\": \"6191819b-09ca-4ac1-b1b4-143bd5ef1975\",\r\n                                \"deleted\": false\r\n                            }\r\n                        ],\r\n                        \"deleted\": false\r\n                    },\r\n                    {\r\n                        \"code\": \"50a8e566-72f7-49d9-b431-cc9796e49ff3\",\r\n                        \"ordinal\": 2,\r\n                        \"maxValue\": 32.404314285714285,\r\n                        \"averageValue\": 27.421685876623382,\r\n                        \"maxLeftRatio\": 0.0,\r\n                        \"overTargetDurationMilis\": 4627,\r\n                        \"bodyPartSide\": \"RIGHT\",\r\n                        \"startTime\": 1685705280999,\r\n                        \"measurements\": [\r\n                            {\r\n                                \"code\": \"c179afb0-1a72-4626-9be7-6a0bc3dfe5e0\",\r\n                                \"deviceType\": \"KFORCE_GRIP\",\r\n                                \"bodyPartSide\": \"RIGHT\",\r\n                                \"bodyPart\": \"ARM\",\r\n                                \"deviceFirmware\": \"2.30\",\r\n                                \"protocolType\": \"BYTES_17\",\r\n                                \"serialCode\": \"99999000\",\r\n                                \"baseline\": \"ForceSample:4.5004, 0.3949, 0.3152, 0.3177, 0\",\r\n                                \"appVersion\": \"1.13.0\",\r\n                                \"serializedData\": \"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\",\r\n                                \"serializedListsLengths\": [\r\n                                    3790,\r\n                                    1532,\r\n                                    0,\r\n                                    0,\r\n                                    0\r\n                                ],\r\n                                \"deleted\": false\r\n                            },\r\n                            {\r\n                                \"code\": \"d6f4b39e-fa34-4124-b7fe-142012c00436\",\r\n                                \"deviceType\": \"KFORCE_GRIP\",\r\n                                \"bodyPartSide\": \"RIGHT\",\r\n                                \"bodyPart\": \"ARM\",\r\n                                \"deviceFirmware\": \"2.30\",\r\n                                \"protocolType\": \"BYTES_17\",\r\n                                \"serialCode\": \"99999000\",\r\n                                \"baseline\": null,\r\n                                \"appVersion\": \"1.13.0\",\r\n                                \"serializedData\": \"eNrtlk+op2MUx2+aUpQUhfwphVL8vOf5e57FPPdeidWQomYWHKWQLNyQshAa3TElpiFFo9SoGRnDTWg2ysZOykIZfzY0JluWU873ye85z3vtlIXcp2733vOe85xzPs95vu87CfmFz2VaLqYoLi1SpvLX4pQkTIvJ89KSJy9Rw4LvYTlJ0qiQuo8T1iDyS0OMLEWDKC8txQtNGuR6qpijEJVFyWxOSUv0C8fdq7ggFDQwUc8/qVfUwNjz5SKUNZ/vcYFZiJFQW5zQUVg+Ss6JUxKBrKWQxSmJTL2nVEgcUFheNwVxYJGzeWkgYLAzPOIy2uoJOWoccERngMQDR0xjo95pPmddJfEeFLtTDGoCDTdZnHjA4F5TjuqkNFzpNZEXDxiWjZVLABczaSuhDUgvIJFOA7BE6y5IAJUQZjspleCsOychNZo9zKtTm5GeLbEEQLHCi0QwKb03VgsmhK2irMOoQckNkGKbj9gtQWJqIHv7EjEdzgY2SgQP3w+XnGixC7KSiSW1Ken3hbIk0Mg9lboABk+jCybEKmbdGCxi70qvWAKKGI2OpDYfPPSZlUV2PVUkya4BtHmUDBaFrc8ctgPMGI5i5bBksMjODkIybwfIYGElszBQBLvgRRgofLbcHMAvDDGYiqkfr2oCp234GCBMAPQeM0CYIEFIAMLb5EpxbQAH5sXjoOymkhQFodI1bFwwE8FERC256Vr38aL6p1M7mUQJ9lzQ7LrRBBZsY6EKNQHGqFpqCg1h91K1mwAk+uFWqiZqYIizQEZGuBd0ZfdaFQ0amnmQMjWBhh40QTm91dDcQQEy23p3s0cZV5Zsloha89oM9JKYh0dNLou9JeCEjksanVrDbubUGrbz1oahluzsHLQ6x+3izQLL9up865zHuCaXPI27Qy8Hmqrh5BsD610tCfm6T0Rco2FDphaevQ40DHLpTMDAFXqpmjWICDW9LDzsBL2k2e2ippd5msWBi7cXi1qAZaZQBMEMJQ9XlyCZbFXBAiwljnHQzGCaCSdQsaJgARU/6hZBNYMfBwGqmUsYkaeGJQ63kVLDwuNWEE62m68aSKlxKbNA5RJDHt4jBPHkQINUUuK/VQr5jHamCMwNzKixBAGl7GZeIGN16ZlCQu0FD8Gk3NCkWRzQhGk4Zogom9qpmhBU1JHNLD5JgMY+gvTLiSCkbANTdD6alLKb7dXQ2NAmfN5ooH0EtUBF45y99+EFNC6OOgRFZWfnoxaQKcNEqsk3lRudQKbMVASiqsetf4BHMmFCFgAZvsjKyn9w1fsu/bk+c+OX9YXjh+vzL+X69NmL6xMPv1M3bjhbH/v8o/bz4LcXVLn3rea798T7dc/+Pf9qTciBOg5u/FhfP7a3vn1opb57+4X1ve9O1ZN3XVQ/2XVF/ey2r+un1z3ZfuP/rQ+vbc8+WGzVE1du1GNvnlePXn+yHnn8aH3j9B/1kPaD/TavPlP3/3BLfe6R7+uzui/yLHtd9on899y0+5/0We/+7cXG6Smt+0C9tb62ea4eP3V//WLPN/X3zXOr1xxaWb3zfFl9+eDp1Z+ObK2FM7vWXrlkbe2ryw+v77ps3/pVvzywfvOjv65nenV9976P1+848NDKztpZO2tn7ayd9T9efwJhubkF\",\r\n                                \"serializedListsLengths\": [\r\n                                    2688,\r\n                                    600,\r\n                                    600,\r\n                                    600,\r\n                                    600\r\n                                ],\r\n                                \"deleted\": false\r\n                            }\r\n                        ],\r\n                        \"metaFields\": [\r\n                            {\r\n                                \"code\": \"8c1f728c-f280-480a-af64-71f56f242373\",\r\n                                \"metaKey\": \"RFD_MEASUREMENTS\",\r\n                                \"metaValue\": \"d6f4b39e-fa34-4124-b7fe-142012c00436\",\r\n                                \"deleted\": false\r\n                            }\r\n                        ],\r\n                        \"deleted\": false\r\n                    },\r\n                    {\r\n                        \"code\": \"a43314a3-b787-4a67-a025-3a16346724cb\",\r\n                        \"ordinal\": 3,\r\n                        \"maxValue\": 31.007985714285713,\r\n                        \"averageValue\": 20.94820598006646,\r\n                        \"maxLeftRatio\": 0.0,\r\n                        \"overTargetDurationMilis\": 3040,\r\n                        \"bodyPartSide\": \"RIGHT\",\r\n                        \"startTime\": 1685705290080,\r\n                        \"measurements\": [\r\n                            {\r\n                                \"code\": \"16eb213f-0c70-4b27-a775-aa545ee1d62b\",\r\n                                \"deviceType\": \"KFORCE_GRIP\",\r\n                                \"bodyPartSide\": \"RIGHT\",\r\n                                \"bodyPart\": \"ARM\",\r\n                                \"deviceFirmware\": \"2.30\",\r\n                                \"protocolType\": \"BYTES_17\",\r\n                                \"serialCode\": \"99999000\",\r\n                                \"baseline\": \"ForceSample:4.5004, 0.3949, 0.3152, 0.3177, 0\",\r\n                                \"appVersion\": \"1.13.0\",\r\n                                \"serializedData\": \"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\",\r\n                                \"serializedListsLengths\": [\r\n                                    3774,\r\n                                    1528,\r\n                                    0,\r\n                                    0,\r\n                                    0\r\n                                ],\r\n                                \"deleted\": false\r\n                            },\r\n                            {\r\n                                \"code\": \"f84d9387-c3a6-4415-9cf5-8d7a6d119cc5\",\r\n                                \"deviceType\": \"KFORCE_GRIP\",\r\n                                \"bodyPartSide\": \"RIGHT\",\r\n                                \"bodyPart\": \"ARM\",\r\n                                \"deviceFirmware\": \"2.30\",\r\n                                \"protocolType\": \"BYTES_17\",\r\n                                \"serialCode\": \"99999000\",\r\n                                \"baseline\": null,\r\n                                \"appVersion\": \"1.13.0\",\r\n                                \"serializedData\": \"eNrtlrGrXUUQh21EiZUIdmIQC6vDzuzO7mxhzn2FaCViZ0C2ECwEwT9C7ESwEa1srawstZN0FgHTpVJQDKSwUGzE+S15O3Ouf0LuKd5L9s3Mzn5n9rs3Dcpbbq0/empveXDdaqP06OHUZZS0pazXUS3lIXkrpV8HJeEyat2acCg1NG3EK4Yrj25pnK9jemqDkqVR9TQalrMlLSuKsrVpferqsw8qllYk1qZqaUUPxZvtR+06ilgHqSWmHotbi5v9zYszqHRaC2oxoOI9tdoGg4qs8+XMg4GlZl9So2n71bqWuA4Gl7woqOVNLs3zRgaWXjxGRgaWvhgolZEz9lvFU7YogBENxTO4eFPURwaWtWBpI4MKc6xdQKVTrF0ml9VU1VGAxXsyKmVSkVC7yP+atP9uWhYBG7oymSwCXKyBft6lGBRNa7dmLI3/RsmntdhkYjsNtQVImgMYUrGZz4AlTSIck0DEG6JhB7CdxF/kqBOHhhDGuy6hbgWNuu5JthjQaBpjJgzfqY6q5/1VY2GnX/3paGBB6+Ako00UOWQ1oGgcKreJQmIWWDjm3EYDC+/HztUUe/nAit1s7OUDW4f93a4ahSydNDRUVtDwfhBjNER8L4uZNHrcCzRcLFqGggb7XnX0dN5hBw3lULmDhkrMMhrWwRoeHX3SqDFm0lj9NBp90vBRhcPSNN2KMhkl8ND15u1CUQIQpUNUOVOdLU0kvuFU5HmflAwKZ98RS6CSJVwzglyVfUJNpJAr9XAgWwKY7kNqrUKv9iYCc4Je3dNwIk29trL6shWwKRSKQ65UojMIepXoW4JdNYl/CNiSkQnjZG+CYFfp0RoEu+rhcwFy5eBbBPVJ1KeOYFetft2tOOzKbhu73gS7insap4Fdba7XijGGXg1ouOIEv0qKDiYIVr0tMgwQLLkbyMpDsHZhXcO2xJNosCBBsfgRuJc5NHKIMjSd16tQlAcbrkGWBMnWgzRoWrb7Ga08LMsHsRE0Kwezkcyh4cAZog0f93ZoiFa8dxwaptXskyX4JLc878ry4FpDGlRGsK02HxosgUzrQTlU59A4GNQCGZcO46sDyGBj4GAPt2iI9owjTMtcgm0Iqj3jCNeecYRs+aBfgm2l+gTbm5u6dU3aCnRrHKNM4FspHD4RCMI1kDHPePCMFpxL8O3HTuNfbXCx4dd8lIRODAef9YlBQnEYljvHPChWukR3Tce6B9muKCTLtcaxgGXPpAfNdnYw/YnL89g9tz5//bVbP33x6f7M01/tm+z7m/bvj577Zv/4l+/3z358cv/6k3f2b2+8uv/w3s3953t9/+POs6enXvjt9OLdm6e3bz88fWm/71z9efr17/dPf313//TPh++e/n3rjasbr7x89fyDh1cvffD7hfLluTyX5/Jcnsf5+Q/Gum8X\",\r\n                                \"serializedListsLengths\": [\r\n                                    2733,\r\n                                    600,\r\n                                    600,\r\n                                    600,\r\n                                    600\r\n                                ],\r\n                                \"deleted\": false\r\n                            }\r\n                        ],\r\n                        \"metaFields\": [\r\n                            {\r\n                                \"code\": \"5a04697e-5514-4800-a560-f2543c98e180\",\r\n                                \"metaKey\": \"RFD_MEASUREMENTS\",\r\n                                \"metaValue\": \"f84d9387-c3a6-4415-9cf5-8d7a6d119cc5\",\r\n                                \"deleted\": false\r\n                            }\r\n                        ],\r\n                        \"deleted\": false\r\n                    }\r\n                ],\r\n                \"points\": 0,\r\n                \"markersDistance\": 0.0,\r\n                \"distanceTravelled\": 0.0,\r\n                \"name\": null,\r\n                \"deleted\": false,\r\n                \"metaFields\": []\r\n            }\r\n        ],\r\n        \"deleted\": true,\r\n        \"createdOn\": 1685705297000,\r\n        \"updatedOn\": 1698866923000,\r\n        \"metaFields\": []\r\n    }\r\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{urlBase}}/api/protocols/v1",
+							"host": [
+								"{{urlBase}}"
+							],
+							"path": [
+								"api",
+								"protocols",
+								"v1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update protocol",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "X-Auth-Token",
+								"value": "{{X-Auth-Token-Value}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"code\": \"f8830f9c-6d16-4bb8-ab8f-7b89105fd71a\",\r\n        \"userCode\": \"d6caf731-eeb7-4cb3-a6eb-b925b4d4fbeb\",\r\n        \"participantCode\": \"e448725b-5bfd-4230-8f58-e4f88c9ca426\",\r\n        \"config\": null,\r\n        \"appAgent\": \"PHYSIO\",\r\n        \"scheduledEvent\": null,\r\n        \"activities\": [\r\n            {\r\n                \"code\": \"2b7acd74-5c1b-413a-a557-7c1e3279a156\",\r\n                \"participantCode\": \"e448725b-5bfd-4230-8f58-e4f88c9ca426\",\r\n                \"startTime\": 1685705351789,\r\n                \"config\": {\r\n                    \"code\": \"e3563bd9-b791-4488-8734-e94c45bbe3bd\",\r\n                    \"userCode\": null,\r\n                    \"name\": null,\r\n                    \"title\": \"exercise_template_builtin_grip_text\",\r\n                    \"tags\": \"exercise_template_builtin_grip_text_group,UPPER_LIMB,WRIST_HAND,STRENGTH\",\r\n                    \"repetition\": 1,\r\n                    \"duration\": 3,\r\n                    \"rest\": 3,\r\n                    \"preparationTime\": 3,\r\n                    \"difficulty\": \"UNKNOWN\",\r\n                    \"exerciseType\": \"METER_ENDURANCE\",\r\n                    \"activityType\": \"EVALUATION\",\r\n                    \"orientationType\": \"UNKNOWN\",\r\n                    \"activityConfigSets\": [\r\n                        {\r\n                            \"code\": \"1b31ba05-4657-47c7-b482-5b349599031f\",\r\n                            \"ordinal\": 0,\r\n                            \"bodySide\": \"RIGHT\",\r\n                            \"bodyPart\": \"ARM\",\r\n                            \"deviceType\": \"UNKNOWN\",\r\n                            \"balancePattern\": \"UNKNOWN\",\r\n                            \"metaFields\": [\r\n                                {\r\n                                    \"code\": \"a8b9bbe4-e9ce-4d7e-a6b1-e0c87ac9ea7c\",\r\n                                    \"metaKey\": \"target\",\r\n                                    \"metaValue\": \"15.623999999999999\",\r\n                                    \"deleted\": false\r\n                                }\r\n                            ],\r\n                            \"deleted\": false\r\n                        },\r\n                        {\r\n                            \"code\": \"ea3c0d5b-5665-4d8f-a0df-69c969f24095\",\r\n                            \"ordinal\": 1,\r\n                            \"bodySide\": \"LEFT\",\r\n                            \"bodyPart\": \"ARM\",\r\n                            \"deviceType\": \"UNKNOWN\",\r\n                            \"balancePattern\": \"UNKNOWN\",\r\n                            \"metaFields\": [\r\n                                {\r\n                                    \"code\": \"ab9346e1-b257-4a96-9fb6-c19530ff42e7\",\r\n                                    \"metaKey\": \"target\",\r\n                                    \"metaValue\": \"15.623999999999999\",\r\n                                    \"deleted\": false\r\n                                }\r\n                            ],\r\n                            \"deleted\": false\r\n                        }\r\n                    ],\r\n                    \"activityConfigInstructions\": [\r\n                        {\r\n                            \"code\": \"5e8e9c52-c749-41c1-96a6-23c533f90140\",\r\n                            \"ordinal\": 1,\r\n                            \"title\": \"exercise_template_builtin_grip_text\",\r\n                            \"description\": null,\r\n                            \"image\": \"device_grip_real\",\r\n                            \"deleted\": false\r\n                        }\r\n                    ],\r\n                    \"activityConfigDevices\": [\r\n                        {\r\n                            \"code\": \"e547ba19-a390-49df-be28-9754db145ce5\",\r\n                            \"deviceType\": \"GRIP\",\r\n                            \"deleted\": false\r\n                        }\r\n                    ],\r\n                    \"metaFields\": [],\r\n                    \"antagonistCode\": null,\r\n                    \"baseConfigCode\": \"68545ae8-875b-11e9-bc42-526af7764f64\",\r\n                    \"deleted\": false,\r\n                    \"buildIn\": true,\r\n                    \"configurable\": true\r\n                },\r\n                \"repetitions\": [\r\n                    {\r\n                        \"code\": \"8deb7da6-7810-420c-bb45-b61ed07bfe32\",\r\n                        \"ordinal\": 1,\r\n                        \"maxValue\": 33.817614285714285,\r\n                        \"averageValue\": 25.352814560439562,\r\n                        \"maxLeftRatio\": 0.0,\r\n                        \"overTargetDurationMilis\": 2626,\r\n                        \"bodyPartSide\": \"RIGHT\",\r\n                        \"startTime\": 1685705355152,\r\n                        \"measurements\": [\r\n                            {\r\n                                \"code\": \"8e3eec0e-e770-470e-b5a5-48048ac2e18d\",\r\n                                \"deviceType\": \"KFORCE_GRIP\",\r\n                                \"bodyPartSide\": \"RIGHT\",\r\n                                \"bodyPart\": \"ARM\",\r\n                                \"deviceFirmware\": \"2.30\",\r\n                                \"protocolType\": \"BYTES_17\",\r\n                                \"serialCode\": \"99999000\",\r\n                                \"baseline\": \"ForceSample:4.5004, 0.3949, 0.3152, 0.3177, 0\",\r\n                                \"appVersion\": \"1.13.0\",\r\n                                \"serializedData\": \"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\",\r\n                                \"serializedListsLengths\": [\r\n                                    2048,\r\n                                    924,\r\n                                    0,\r\n                                    0,\r\n                                    0\r\n                                ],\r\n                                \"deleted\": false\r\n                            },\r\n                            {\r\n                                \"code\": \"efeb3888-a98e-4e87-8b5f-0d081b22a952\",\r\n                                \"deviceType\": \"KFORCE_GRIP\",\r\n                                \"bodyPartSide\": \"RIGHT\",\r\n                                \"bodyPart\": \"ARM\",\r\n                                \"deviceFirmware\": \"2.30\",\r\n                                \"protocolType\": \"BYTES_17\",\r\n                                \"serialCode\": \"99999000\",\r\n                                \"baseline\": null,\r\n                                \"appVersion\": \"1.13.0\",\r\n                                \"serializedData\": \"eNrtlTEOFDkQRTdBWokzkEE6cpWr7HIyk3ADDmARLQE32HCDDQlW2oCMHImElDsQcQFOgESKxP+GpcuTbd6VjHu6XK73bf8uU+pFRy3/hejUdmmtHBE667iMZkdSn14vterxj8yGaeozyqWUVK/NgdTSj3o6pSA3rSA2RTGvH0uUjs4wMeLI8imGiSFHFiY2TEzF0Jt0TPS61Yp26ZqWrBNPl6KWERRiVBRQShCeayolSM2UNpUaOH5JbuPIntqRnBqAphShHo1LnZUiqM1K8hEpuQLcRHOzFeC9eNaiEjwsd1QJ3nsuFSQpOcnIbTGNsJ62cBqwuxwgxacZklMrUMKILS13Z1QgtaLTqEDqBMWpgPt0YlvkvUcTF9HciVMBbamgU4A6ndAjEzqZU8+YzL32mI2gLZdt8qOHRtC0oM5GzrQgcokZFceabJmk8Yi7Jf622GJ2snna5dmJVjNIJ5pl9fpCwy/YRLbZYLOSde1k67nzIGXHvQObVTyTrWaSIJvl+xdk21QMUPYZJGsxgzw9KzdI1jzNGIssxq/APSdZnQM8+Y4il2TJFJBDsi45Z5F5yuHb1Y6UxeabgyzMsaUbV2kYOGUr2zvydZYiYs8iSyFty/spNKhuWIa2JGsAOC8jt0AzijVoPxeWRQVPWnbTOl2N87fOdcFEXo5+E8nE+BdhNB9rod/g0m61iBWy/RXLFjAY92YgdWF5Lkr3EVwJoem4YuW6tg80NBgZthUgYLoMTCcqhKWtiG8bQocxxzQaS8gmni2+uqWTTztNHiUHECzurVFoI9by8RY6Sm8DA7KgFbqH29Yl7YOi0D9Uti5pII7PntA3Ap5Hb7sHp3PcgdNEwvkBIopHbonmYb7tC30kFF3SPqA2BuPe5IQGssjpG8qvG+3C9/NKv4i+nSlah9p2NOgdoMaAWHUTn56hVIqm4bL1GWuvsDJtA08YECYav6F4tV8UOgYUxGDtC7qjU4Rue0ar0P2ujrVF2WGEtjGUg7VHm/y0Cw++I0w4P97sbvx2xhn/I67P/312/eePN9f3nz9cP738ev1iD24Pf399e/zk3e3215+3F08/3l7Fo9vbv7+dap1xxhlnnHHGj/gO/Qbhcw==\",\r\n                                \"serializedListsLengths\": [\r\n                                    2240,\r\n                                    604,\r\n                                    604,\r\n                                    604,\r\n                                    604\r\n                                ],\r\n                                \"deleted\": false\r\n                            }\r\n                        ],\r\n                        \"metaFields\": [\r\n                            {\r\n                                \"code\": \"6723f547-6abb-45a1-a889-d07af5ee22b6\",\r\n                                \"metaKey\": \"RFD_MEASUREMENTS\",\r\n                                \"metaValue\": \"efeb3888-a98e-4e87-8b5f-0d081b22a952\",\r\n                                \"deleted\": false\r\n                            }\r\n                        ],\r\n                        \"deleted\": false\r\n                    },\r\n                    {\r\n                        \"code\": \"49354265-c025-4d07-9bfe-aee6d51506ff\",\r\n                        \"ordinal\": 1,\r\n                        \"maxValue\": 31.078714285714284,\r\n                        \"averageValue\": 26.913783827493262,\r\n                        \"maxLeftRatio\": 0.0,\r\n                        \"overTargetDurationMilis\": 2960,\r\n                        \"bodyPartSide\": \"LEFT\",\r\n                        \"startTime\": 1685705361877,\r\n                        \"measurements\": [\r\n                            {\r\n                                \"code\": \"9f6a275e-970e-4592-b3be-8886f3217651\",\r\n                                \"deviceType\": \"KFORCE_GRIP\",\r\n                                \"bodyPartSide\": \"LEFT\",\r\n                                \"bodyPart\": \"ARM\",\r\n                                \"deviceFirmware\": \"2.30\",\r\n                                \"protocolType\": \"BYTES_17\",\r\n                                \"serialCode\": \"99999000\",\r\n                                \"baseline\": \"ForceSample:4.5004, 0.3949, 0.3152, 0.3177, 0\",\r\n                                \"appVersion\": \"1.13.0\",\r\n                                \"serializedData\": \"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\",\r\n                                \"serializedListsLengths\": [\r\n                                    2293,\r\n                                    928,\r\n                                    0,\r\n                                    0,\r\n                                    0\r\n                                ],\r\n                                \"deleted\": false\r\n                            },\r\n                            {\r\n                                \"code\": \"41bd6436-093e-4a93-9c9e-f1fa21dc2d12\",\r\n                                \"deviceType\": \"KFORCE_GRIP\",\r\n                                \"bodyPartSide\": \"LEFT\",\r\n                                \"bodyPart\": \"ARM\",\r\n                                \"deviceFirmware\": \"2.30\",\r\n                                \"protocolType\": \"BYTES_17\",\r\n                                \"serialCode\": \"99999000\",\r\n                                \"baseline\": null,\r\n                                \"appVersion\": \"1.13.0\",\r\n                                \"serializedData\": \"eNrtlj2onUUQhgNGyA8ajVjEWFjEQomHnd2d/Sn8vnvjX2MqEW1kAxGTVixSaCEoIlioqCgExEMM2kgqBcFKCBbWSZpYKYiNbRpB513I2fdLSrHyLBzuZe7O7My77z7nuiZhFVJ2N5fU5tPKAvXmsr+2UFc1hU3IhaaWFmQTiV5bsrwQR5604lbO+U0ktxpWvurYkps4nDZK19JEcFraRFK0Ju24PELaJKZVjuO02iTZaSGPPalJDqvoxnnIK5bnyjguNO8sUUab1TcPVYpsVLFN/rY+fbS8ODZJbh6yRN2ETBXfZcnUqO+yJC5uugRXR1oLXZZxLakFqDICKB1MlahDgxYgio7hpAWIop7rQBPZ7CnVQtDEDwGctghN6jBBjC12TQIVjx7HkVNahCTUkWV1RfKitimSRRe1IcloCpUgSUnkHe2SVKqtkIQ6UnMlFBmbUlNIkoTrmCTiC12IQhIvnNUVUcpKXZDYktzaV+oqkDNa6iqUlhR1x0Vbdh/ddmBeOtEimHc4wEyRMa/ZM3vbm4SuMGPKPCLacp9SORtTRk+3lTFlHDO1jCHjODLbe7UklyipCNziOIJxc6arKhi3EAtaweCR30rB4NSOtgIJqB3LqjgrUFZ1eKyJ9lSIUdRAYnvrkFZahQSlcDYkMApUDG4/bNxib2/cBhRcSeBnLg4DB13ssokLYcwimJhON6w4jOwYRw4jE8YsgpGJrBbByLGQ8wRAzFFIXxGPa6nkOQEQ1Qgr4GDxYVEBc9PbBVFNAl0gRzoI0QPwJykRfAT4i5nNKOBfTvglwlhsPvH9upUcKqBeIaaiaOnmIrsJuBeJe5YI8OXMFpTQ79xxLZBPk/KIYF8h9llfgJ8kNqaAfkrdoxZ8Edh2Avp58WwC0E8xbOxuYFYLqCc5LbZDkuG1ngg/5ECWFWBPlA0B7C2QLsBeEeEI7ED8tAjk8IsI1Kj8/KVzryaWEeDTFNk8IF8hzCq+VzEe41FAQbUxwb5Cz9q0A/y8LBQGB1WYTgIQFoftkKAktgBQaN8YvB0szCWwwsAi1YTCubuCSSkAY0lxsct08AsUCdCoQVktwLHSo7cmQEe/oJEAj5ojzw8+3iJg6f5wi0RIEsoiMd2mJRgpkb+GBJBUieyi2h1SWHFg0s5gvUBMXTKrdpMshAYz/QJatXvELUpBG/qXxu/Zrv9sTaevHZjenU5Mn3z94nT+8X3T+rcb08WnD04X7nxu+vLhS9NX7/zYP98cfXX64ftj03d7j/S/f3RmPZ37457p5Nsn/3UP7fnz05tnr0+ff7in17/y7GfTXy+9PO/76df53sfOzfedWffP4Weemg+98ed89+mH5sPXXpsf/H3vfOzbX+ZHHnWzvH95nt96fT7196fzB3cdnS+fOrFz//rnnVf237Fz4fjFnevvPbl76OyB3eMPfLH7xMeXdl+4ut7e/nZt13Zt13b9n9c/aF59AQ==\",\r\n                                \"serializedListsLengths\": [\r\n                                    2630,\r\n                                    600,\r\n                                    600,\r\n                                    600,\r\n                                    600\r\n                                ],\r\n                                \"deleted\": false\r\n                            }\r\n                        ],\r\n                        \"metaFields\": [\r\n                            {\r\n                                \"code\": \"280be368-b2b9-4847-b972-4f5fca1f65ff\",\r\n                                \"metaKey\": \"RFD_MEASUREMENTS\",\r\n                                \"metaValue\": \"41bd6436-093e-4a93-9c9e-f1fa21dc2d12\",\r\n                                \"deleted\": false\r\n                            }\r\n                        ],\r\n                        \"deleted\": false\r\n                    }\r\n                ],\r\n                \"points\": 0,\r\n                \"markersDistance\": 0.0,\r\n                \"distanceTravelled\": 0.0,\r\n                \"name\": null,\r\n                \"deleted\": false,\r\n                \"metaFields\": []\r\n            }\r\n        ],\r\n        \"deleted\": false,\r\n        \"createdOn\": 1685705367000,\r\n        \"updatedOn\": 1685705367000,\r\n        \"metaFields\": []\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{urlBase}}/api/protocols/v1/{{test_protocol_code}}",
+							"host": [
+								"{{urlBase}}"
+							],
+							"path": [
+								"api",
+								"protocols",
+								"v1",
+								"{{test_protocol_code}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Bulk delete",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "X-Auth-Token",
+								"value": "{{X-Auth-Token-Value}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[\r\n  \"{{test_protocol_code}}\"\r\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{urlBase}}/api/protocols/v1",
+							"host": [
+								"{{urlBase}}"
+							],
+							"path": [
+								"api",
+								"protocols",
+								"v1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete protocol",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "X-Auth-Token",
+								"value": "{{X-Auth-Token-Value}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{urlBase}}/api/protocols/v1/{{test_protocol_code}}",
+							"host": [
+								"{{urlBase}}"
+							],
+							"path": [
+								"api",
+								"protocols",
+								"v1",
+								"{{test_protocol_code}}"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "**Protocol** is a recorded activity performed by a participant using any of the K-Force devices.\n\nProtocol is the top level hierarchy object in which **activities** are stored.\n\nThe configuration of each activity is stored inside config field and the measurements performed are stored inside the repetitions field in the activity resource.\n\n### **Fetching protocols**\n\n1. If you want to fetch protocols based on a particular participant, it is highly recommended to use \"Find protocols by participantCode\" endpoint since it is filtering protocols based on the participant's code.\n    \n2. The \"updatedAfter\" parameter is automatically calculated for the last week, in order to change the value please comment out the Postman script under the endpoints that make use of the parameter.\n    \n\n### **Analyzing protocols**\n\nAnalyze a Protocol and fetch the results of a recorded activity, performed by a participant using any of the K-Force sensors. This endpoint can accept many Protocol codes that will be analyzed in a batch.\n\nThe results of each activity is stored inside **activitiesResults**, a field of the **ProtocolAnalysisResult** resource. This field in a stringified JSON and it is different as per each activity type. Please check the different kind of analysis reports in the KINVENT Physio application.\n\nFor more details, please check the **ProtocolAnalysisServiceResponse and Protocol** objects in the **Schemas** section in our documentation site.\n\n[https://www.api.documentation.k-invent.com/doc/index.html#/](https://www.api.documentation.k-invent.com/doc/index.html#/)"
+		},
+		{
+			"name": "Activity Config",
+			"item": [
+				{
+					"name": "Fetch all configurations",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-Auth-Token",
+								"value": "{{X-Auth-Token-Value}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{urlBase}}/api/activityConfigs/v1",
+							"host": [
+								"{{urlBase}}"
+							],
+							"path": [
+								"api",
+								"activityConfigs",
+								"v1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Fetch configuration",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-Auth-Token",
+								"value": "{{X-Auth-Token-Value}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{urlBase}}/api/activityConfigs/v1/{{test_activity_config_code}}",
+							"host": [
+								"{{urlBase}}"
+							],
+							"path": [
+								"api",
+								"activityConfigs",
+								"v1",
+								"{{test_activity_config_code}}"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "This resource stores the configuration of a custom activity created within the Physio application."
+		}
+	]
+}
